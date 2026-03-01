@@ -1,7 +1,4 @@
-/* ===========================================
-   style.css - ITZFIZZ Car Scroll Animation
-   Written by BCA Semester 2 Student
-   =========================================== */
+/* style.css 
 
 /* ---- CSS Variables (colors and fonts) ----
    I put all colors here so it's easy to change */
@@ -462,4 +459,5 @@ html {
   .scroll-indicator {
     display: none;
   }
+
 }
