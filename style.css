@@ -1,7 +1,5 @@
-/* style.css 
+/* style.css*/
 
-/* ---- CSS Variables (colors and fonts) ----
-   I put all colors here so it's easy to change */
 :root {
   --bg-dark: #050505;
   --bg-section: #0a0a0a;
@@ -461,3 +459,4 @@ html {
   }
 
 }
+
