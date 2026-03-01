@@ -1,7 +1,4 @@
-// ==============================================
-// script.js - ITZFIZZ Car Scroll Animation
-// Written by BCA Semester 2 Student
-// ==============================================
+// script.js 
 
 // Wait for page to fully load before doing anything
 window.addEventListener('load', function () {
@@ -247,5 +244,6 @@ window.addEventListener('load', function () {
   // ============================================
   console.log('ITZFIZZ script loaded successfully!');
   console.log('Scroll down to see car animation.');
+
 
 }); // end of window load event
