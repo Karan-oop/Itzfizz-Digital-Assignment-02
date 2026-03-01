@@ -1,0 +1,465 @@
+/* ===========================================
+   style.css - ITZFIZZ Car Scroll Animation
+   Written by BCA Semester 2 Student
+   =========================================== */
+
+/* ---- CSS Variables (colors and fonts) ----
+   I put all colors here so it's easy to change */
+:root {
+  --bg-dark: #050505;
+  --bg-section: #0a0a0a;
+  --accent-orange: #e85d04;
+  --accent-yellow: #ffd60a;
+  --text-white: #ffffff;
+  --text-muted: #888888;
+  --text-light: #cccccc;
+  --font-heading: 'Oswald', sans-serif;
+  --font-body: 'Poppins', sans-serif;
+}
+
+/* ---- Reset - remove default browser styles ---- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---- Body ---- */
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-white);
+  font-family: var(--font-body);
+  overflow-x: hidden; /* hide horizontal scrollbar */
+}
+
+/* Smooth scrolling for whole page */
+html {
+  scroll-behavior: smooth;
+}
+
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* full screen height */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #080808;
+
+  /* Subtle radial gradient background */
+  background-image:
+    radial-gradient(ellipse at 30% 50%, rgba(232, 93, 4, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 50%, rgba(255, 214, 10, 0.04) 0%, transparent 60%);
+}
+
+/* Dark overlay on hero */
+.hero-overlay {
+  position: absolute;
+  inset: 0; /* shorthand for top:0 right:0 bottom:0 left:0 */
+  background: linear-gradient(
+    to bottom,
+    rgba(5,5,5,0.3) 0%,
+    rgba(5,5,5,0.1) 40%,
+    rgba(5,5,5,0.5) 100%
+  );
+  z-index: 1;
+  pointer-events: none; /* don't block clicks */
+}
+
+/* Grain noise texture - makes it look premium */
+.noise-layer {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+
+/* ---- HEADLINE ---- */
+.headline-wrapper {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  top: -60px; /* move it up a bit so car has space */
+}
+
+/* The big letter-by-letter text */
+.brand-headline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px; /* space between letters */
+  flex-wrap: wrap;
+}
+
+/* Each individual letter style */
+.brand-headline span {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 6vw, 5.5rem); /* responsive font size */
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-white);
+  display: inline-block;
+
+  /* Start invisible and slightly up - JS will animate these in */
+  opacity: 0;
+  transform: translateY(-30px);
+
+  /* Text outline effect for some letters */
+  text-shadow: 0 0 40px rgba(232, 93, 4, 0.2);
+}
+
+/* The space gap between WELCOME and ITZFIZZ */
+.letter-gap {
+  width: 20px;
+  /* This span has no letter so just a space */
+  opacity: 1 !important; /* override the opacity:0 above */
+  transform: none !important;
+}
+
+/* Orange colored letters for ITZFIZZ */
+.brand-headline span:nth-child(n+9) {
+  color: var(--accent-orange);
+  text-shadow: 0 0 60px rgba(232, 93, 4, 0.5);
+}
+
+/* Underline that grows from center */
+.headline-underline {
+  width: 0%; /* starts at 0, JS animates to 100% */
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--accent-orange), transparent);
+  margin: 16px auto 0;
+  transition: width 0.8s ease;
+}
+
+/* Tagline below headline */
+.hero-tagline {
+  font-family: var(--font-body);
+  font-size: clamp(0.75rem, 1.5vw, 1rem);
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 14px;
+  opacity: 0; /* starts hidden, JS shows it */
+  transform: translateY(10px);
+}
+
+
+/* ---- CAR IMAGE ---- */
+.car-wrapper {
+  position: absolute; /* positioned relative to hero section */
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%); /* center it horizontally */
+  width: 70%;
+  max-width: 900px;
+  z-index: 5;
+}
+
+/* The actual car image */
+.car-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  /* Drop shadow to make car look like it's floating */
+  filter: drop-shadow(0 20px 60px rgba(232, 93, 4, 0.25));
+
+  /* Starts slightly below and invisible - will animate in */
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+/* Orange glow under the car */
+.car-glow {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 30px;
+  background: radial-gradient(ellipse, rgba(232,93,4,0.4) 0%, transparent 70%);
+  filter: blur(10px);
+  z-index: -1;
+}
+
+
+/* ---- STATS BAR ---- */
+.stats-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-evenly;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(10px); /* frosted glass effect */
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 20px 30px;
+}
+
+/* Each stat box */
+.stat-box {
+  flex: 1;
+  text-align: center;
+  padding: 8px 15px;
+  opacity: 0; /* starts hidden - JS animates in */
+  transform: translateY(20px);
+}
+
+/* The big percentage number */
+.stat-percent {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: var(--accent-orange);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+/* Description text under percentage */
+.stat-desc {
+  font-size: clamp(0.6rem, 1.2vw, 0.78rem);
+  color: var(--text-muted);
+  font-weight: 300;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Thin line between stats */
+.stat-separator {
+  width: 1px;
+  background: rgba(255,255,255,0.08);
+  align-self: stretch;
+  margin: 5px 0;
+}
+
+
+/* ---- SCROLL INDICATOR ---- */
+.scroll-indicator {
+  position: absolute;
+  bottom: 100px; /* above stats bar */
+  right: 40px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0; /* hidden initially */
+}
+
+.scroll-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--text-muted);
+  writing-mode: vertical-rl; /* rotate text vertically */
+}
+
+/* The animated dot track */
+.scroll-dot-track {
+  width: 1px;
+  height: 40px;
+  background: rgba(255,255,255,0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-dot {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 1px;
+  height: 40%;
+  background: var(--accent-orange);
+  /* CSS animation - this one doesn't need JS */
+  animation: dotMove 1.5s ease-in-out infinite;
+}
+
+/* Dot moving down animation */
+@keyframes dotMove {
+  0%   { top: -40%; }
+  100% { top: 100%; }
+}
+
+
+/* ============================================
+   SCROLL ZONE SECTION
+   ============================================ */
+.scroll-zone {
+  position: relative;
+  min-height: 300vh; /* very tall so user has room to scroll */
+  background-color: var(--bg-section);
+  padding: 100px 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 25vh; /* big gap between blocks */
+
+  /* Subtle top border */
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Center road line going down the page */
+.road-line-center {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(232,93,4,0.2) 10%,
+    rgba(232,93,4,0.2) 90%,
+    transparent
+  );
+}
+
+
+/* ---- FEATURE BLOCKS ---- */
+.feature-block {
+  position: relative;
+  z-index: 2;
+  max-width: 380px;
+  opacity: 0; /* hidden until scrolled to - JS handles this */
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Blocks on the left side */
+.left-feature {
+  align-self: flex-start;
+  margin-left: 5%;
+}
+
+/* Blocks on the right side */
+.right-feature {
+  align-self: flex-end;
+  margin-right: 5%;
+  text-align: right;
+}
+
+/* When block becomes visible (class added by JS) */
+.feature-block.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Big number like 01, 02 */
+.feature-number {
+  font-family: var(--font-heading);
+  font-size: 5rem;
+  font-weight: 700;
+  color: rgba(232,93,4,0.12); /* very faint orange */
+  line-height: 1;
+  margin-bottom: -10px; /* overlaps with title slightly */
+}
+
+.feature-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 600;
+  color: var(--text-white);
+  margin-bottom: 14px;
+  letter-spacing: 0.05em;
+}
+
+.feature-text {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.main-footer {
+  background-color: #020202;
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.main-footer p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.main-footer strong {
+  color: var(--accent-orange);
+}
+
+.footer-credit {
+  margin-top: 8px !important;
+  font-size: 0.75rem !important;
+  opacity: 0.5;
+}
+
+
+/* ============================================
+   RESPONSIVE - Mobile phones
+   ============================================ */
+@media (max-width: 768px) {
+
+  /* Smaller headline on mobile */
+  .brand-headline span {
+    font-size: clamp(1.4rem, 8vw, 3rem);
+    gap: 2px;
+  }
+
+  /* Headline moves up less on mobile */
+  .headline-wrapper {
+    top: -40px;
+  }
+
+  /* Car takes more width on mobile */
+  .car-wrapper {
+    width: 90%;
+    bottom: 18%;
+  }
+
+  /* Stats stack in 2x2 grid on mobile */
+  .stats-bar {
+    flex-wrap: wrap;
+    padding: 15px;
+    gap: 10px;
+  }
+
+  .stat-box {
+    flex: 0 0 45%;
+  }
+
+  .stat-separator {
+    display: none; /* hide dividers on mobile */
+  }
+
+  /* Feature blocks take full width on mobile */
+  .left-feature,
+  .right-feature {
+    align-self: center;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: center;
+    max-width: 90%;
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+}

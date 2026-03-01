@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic meta tags - every page needs these -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ITZFIZZ - Car Scroll Animation</title>
+
+  <!-- Google Fonts - Oswald for heading and Poppins for body text -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap 5 for layout help -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- My custom styles -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================================
+       HERO SECTION
+       First thing user sees on page load
+  ==================================== -->
+  <section class="hero-section" id="hero">
+
+    <!-- Dark overlay so text is readable on bg -->
+    <div class="hero-overlay"></div>
+
+    <!-- Grain noise effect layer for premium look -->
+    <div class="noise-layer"></div>
+
+    <!-- ---- BIG HEADLINE ---- -->
+    <div class="headline-wrapper">
+
+      <!-- Each letter is in its own span so GSAP can animate them one by one -->
+      <div class="brand-headline" id="headline">
+        <span>W</span><span>E</span><span>L</span><span>C</span><span>O</span><span>M</span><span>E</span>
+        <!-- This span is just a space gap between words -->
+        <span class="letter-gap"></span>
+        <span>I</span><span>T</span><span>Z</span><span>F</span><span>I</span><span>Z</span><span>Z</span>
+      </div>
+
+      <!-- Animated underline -->
+      <div class="headline-underline" id="headline-underline"></div>
+
+      <!-- Subtext below headline -->
+      <p class="hero-tagline" id="hero-tagline">The Future of Premium Mobility</p>
+    </div>
+
+    <!-- ---- CAR IMAGE (this moves when you scroll) ---- -->
+    <div class="car-wrapper" id="car-wrapper">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/2019_McLaren_720S_%28facelift%2C_orange%29%2C_front_8.18.19.jpg/1200px-2019_McLaren_720S_%28facelift%2C_orange%29%2C_front_8.18.19.jpg"
+        alt="McLaren 720S Sports Car"
+        class="car-image"
+        id="car-image"
+      />
+      <!-- Glow effect under the car -->
+      <div class="car-glow"></div>
+    </div>
+
+    <!-- ---- STATS BAR at bottom of hero ---- -->
+    <div class="stats-bar" id="stats-bar">
+
+      <div class="stat-box" id="stat-0">
+        <div class="stat-percent">58%</div>
+        <div class="stat-desc">Increase in pick up point use</div>
+      </div>
+
+      <div class="stat-separator"></div>
+
+      <div class="stat-box" id="stat-1">
+        <div class="stat-percent">23%</div>
+        <div class="stat-desc">Decreased in customer phone calls</div>
+      </div>
+
+      <div class="stat-separator"></div>
+
+      <div class="stat-box" id="stat-2">
+        <div class="stat-percent">27%</div>
+        <div class="stat-desc">Increase in pick up point use</div>
+      </div>
+
+      <div class="stat-separator"></div>
+
+      <div class="stat-box" id="stat-3">
+        <div class="stat-percent">40%</div>
+        <div class="stat-desc">Decreased in customer phone calls</div>
+      </div>
+
+    </div>
+
+    <!-- Scroll down indicator -->
+    <div class="scroll-indicator" id="scroll-indicator">
+      <span class="scroll-label">SCROLL</span>
+      <div class="scroll-dot-track">
+        <div class="scroll-dot"></div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ===================================
+       SCROLL ZONE
+       This section gives height to scroll through
+       The car animation happens here
+  ==================================== -->
+  <section class="scroll-zone" id="scroll-zone">
+
+    <!-- Horizontal road line in center -->
+    <div class="road-line-center"></div>
+
+    <!-- Left column content blocks -->
+    <div class="feature-block left-feature reveal-block">
+      <div class="feature-number">01</div>
+      <h2 class="feature-title">Raw Power</h2>
+      <p class="feature-text">
+        720 horsepower twin-turbo V8 engine. 0–100 km/h in just 2.9 seconds.
+        This is what it means to be alive on the road.
+      </p>
+    </div>
+
+    <div class="feature-block right-feature reveal-block">
+      <div class="feature-number">02</div>
+      <h2 class="feature-title">Precision Design</h2>
+      <p class="feature-text">
+        Every curve is aerodynamically sculpted for maximum downforce.
+        It's not just beautiful — it's functional science at 200+ mph.
+      </p>
+    </div>
+
+    <div class="feature-block left-feature reveal-block">
+      <div class="feature-number">03</div>
+      <h2 class="feature-title">Smart Inside</h2>
+      <p class="feature-text">
+        Proactive Chassis Control II reads the road ahead. Adaptive suspension
+        adjusts in milliseconds so you always feel in control.
+      </p>
+    </div>
+
+  </section>
+
+
+  <!-- ===================================
+       FOOTER
+  ==================================== -->
+  <footer class="main-footer">
+    <p>© 2024 <strong>ITZFIZZ</strong> — Premium Mobility Experience</p>
+    <p class="footer-credit">Built by a BCA Sem 2 Student 🎓</p>
+  </footer>
+
+
+  <!-- ===================================
+       JS LIBRARIES
+  ==================================== -->
+
+  <!-- GSAP - makes animations buttery smooth -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- My own script file -->
+  <script src="script.js"></script>
+
+</body>
+</html>
